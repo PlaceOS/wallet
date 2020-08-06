@@ -13,15 +13,33 @@ class Passkit
       description: @ticket.event_name.to_s,
       logo_text: logo_text,
       type: PassKit::PassType::EventTicket,
-      foreground_color: "rgb(255, 255, 255)",
-      background_color: "rgb(66, 80, 112)",
-      label_color: "rgb(255, 255, 255)",
+      foreground_color: ENV["APPLE_DESIGN_FOREGROUND_COLOR"],
+      background_color: ENV["APPLE_DESIGN_BACKGROUND_COLOR"],
+      label_color: ENV["APPLE_DESIGN_LABEL_COLOR"],
       header_fields: header_fields,
       primary_fields: [{
         key:   "eventLocation",
         label: "LOCATION",
         value: location_name,
-      }],
+      },
+      ],
+      secondary_fields: [
+        {
+          key:   "passHolderName",
+          label: "NAME",
+          value: @ticket.ticket_holder_name.to_s,
+        },
+        {
+          key:   "eventDate",
+          label: "DATE",
+          value: event_start_date,
+        },
+        {
+          key:   "eventTime",
+          label: "TIME",
+          value: event_start_time,
+        },
+      ],
       relevant_date: relevant_date,
       locations: locations,
       barcodes: barcodes
@@ -30,10 +48,6 @@ class Passkit
     add_icon_image(pk_pass)
     add_logo_image(pk_pass)
   end
-
-  # TODO: Secondary Date Time Fields
-  # TODO: Logo
-  # TODO: Ticket Holder Name
 
   # TODO: Need to verify date time format
   private def relevant_date
@@ -95,5 +109,17 @@ class Passkit
     [
       {latitude: @ticket.location.not_nil!["lat"], longitude: @ticket.location.not_nil!["lon"]},
     ]
+  end
+
+  private def event_start_date
+    parsed_relevant_date.to_s("%e %B %Y")
+  end
+
+  private def event_start_time
+    parsed_relevant_date.to_s("%I:%M%p")
+  end
+
+  private def parsed_relevant_date
+    Time::Format::RFC_3339.parse(relevant_date)
   end
 end
