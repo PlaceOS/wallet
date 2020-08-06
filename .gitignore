@@ -7,3 +7,4 @@ app
 bin
 .env
 data.json
+*.DS_Store
