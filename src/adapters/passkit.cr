@@ -57,7 +57,7 @@ class Passkit
   private def header_fields
     return if @ticket.event_details.nil?
 
-    [{key: @ticket.event_details.not_nil!["header"].to_s, value: @ticket.event_details.not_nil!["body"].to_s}]
+    [{key: "eventHeader", value: @ticket.event_details.not_nil!["header"].to_s}]
   end
 
   private def logo_text

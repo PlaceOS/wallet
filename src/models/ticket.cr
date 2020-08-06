@@ -6,6 +6,8 @@ require "../adapters/passkit"
 require "./google_drive"
 
 class Ticket < ActiveModel::Model
+  include ActiveModel::Validation
+
   attribute event_name : String
   attribute ticket_holder_name : String
   attribute location : NamedTuple(lat: Float64, lon: Float64, name: String?, address: String?)
@@ -14,6 +16,12 @@ class Ticket < ActiveModel::Model
   attribute icon : NamedTuple(image_uri: String?)?
   attribute event_details : NamedTuple(header: String?, body: String?)?
   attribute qr_code : NamedTuple(value: String, alt_text: String?)
+
+  validates :event_name, presence: true
+  validates :ticket_holder_name, presence: true
+  validates :location, presence: true
+  validates :date_time, presence: true
+  validates :qr_code, presence: true
 
   def generate
     serial_number = UUID.random.to_s
@@ -29,15 +37,14 @@ class Ticket < ActiveModel::Model
     spawn do
       pass_content = to_passkit(serial_number: serial_number).to_s
       pass_file = drive.create(name: "#{serial_number}.pkpass",
-                               content_bytes: pass_content,
-                               content_type: "application/vnd.apple.pkpass")
+        content_bytes: pass_content,
+        content_type: "application/vnd.apple.pkpass")
       apple_channel.send(pass_file.id.to_s)
     end
 
-    # TODO: Need to figure out the apple URL base
     {
-      apple_pass_url: "127.0.0.1:3000/#{apple_channel.receive}",
-      google_pass_url: google_channel.receive
+      apple_pass_url:  "#{base_url}/#{apple_channel.receive}",
+      google_pass_url: google_channel.receive,
     }
   end
 
@@ -53,5 +60,13 @@ class Ticket < ActiveModel::Model
 
   private def drive
     GoogleDrive.build
+  end
+
+  def base_url
+    if App.running_in_production?
+      "https://#{App::DEFAULT_HOST}"
+    else
+      "http://#{App::DEFAULT_HOST}:#{App::DEFAULT_PORT}"
+    end
   end
 end

@@ -6,8 +6,11 @@ class Passes < Application
   def create
     ticket = Ticket.from_json(request.body.not_nil!)
 
-    respond_with do
-      json(ticket.generate.to_json)
+    if ticket.valid?
+      render json: ticket.generate.to_json
+    else
+      render(status: HTTP::Status::UNPROCESSABLE_ENTITY,
+        json: {errors: ticket.errors.map { |error| {error.field => error.message} }}.to_json)
     end
   end
 
