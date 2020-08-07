@@ -21,7 +21,7 @@ dependencies:
   google:
     github: PlaceOS/google
   passkit:
-    path: ../passkit
+    github: red-ant/passkit
 
 development_dependencies:
   ameba:
