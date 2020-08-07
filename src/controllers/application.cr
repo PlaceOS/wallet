@@ -27,4 +27,18 @@ abstract class Application < ActionController::Base
   def set_date_header
     response.headers["Date"] = HTTP.format_time(Time.utc)
   end
+
+  private def require_authentication
+    if invalid_api_key?(request.headers)
+      render(status: 401, text: "Request not authenticated")
+    end
+  end
+
+  def invalid_api_key?(headers)
+    key = headers["x-api-key"]?
+
+    return true if key.nil?
+
+    key != ENV["API_KEY"]?
+  end
 end

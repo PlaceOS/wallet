@@ -1,6 +1,8 @@
 require "../models/google_drive"
 
 class Passes < Application
+  before_action :require_authentication, only: :create
+
   base "/"
 
   def create
