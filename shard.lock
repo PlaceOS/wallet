@@ -44,6 +44,10 @@ shards:
     git: https://github.com/crystal-community/jwt.git
     version: 1.4.2
 
+  kilt:
+    git: https://github.com/jeromegn/kilt.git
+    version: 0.6.0
+
   openssl_ext:
     git: https://github.com/stakach/openssl_ext.git
     version: 1.2.2

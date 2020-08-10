@@ -11,26 +11,36 @@
 ## Available EndPoints
 * Requires authentication header `x-api-key` which must match `API_KEY` ENV VAR
 
-### POST /
+### 1. POST `/`
 
 #### BODY
  ```json
  {
-    "event_name": "My event", // required
-    "ticket_holder_name": "John Smith", // required
-    "location":           {"lat": 37.424299996, "lon": -122.0925956000001, "name": "Sydney International Convention Centre", "address": "ICC Sydney"}, // required
-    "date_time":          {"start": "2023-04-12T11:20:50.52Z", "end": "2023-04-12T16:20:50.52Z"}, // required
+    "event_name": "My event",
+    "ticket_holder_name": "John Smith",
+    "location":           {"lat": 37.424299996, "lon": -122.0925956000001, "name": "Sydney International Convention Centre", "address": "ICC Sydney"},
+    "date_time":          {"start": "2023-04-12T11:20:50.52Z", "end": "2023-04-12T16:20:50.52Z"},
     "qr_code":            {
       "value":    "http://example.com/best_url",
       "alt_text": "1234567890",
-    }, // required
+    },
     "logo":               {"image_uri": "https://example.com/logo.png", "description": "Logo Desc"},
     "icon":               {"image_uri": "https://example.com/icon.png"},
     "event_details": {"header": "My header", "body": "BODY of the event"},
  }
 ```
 
-#### RESPONSE
+##### Required fields:
+* `event_name`
+* `ticket_holder_name`
+* `location`
+* `date_time`
+* `qr_code`
+
+
+#### SUCCESS RESPONSE
+`status_code: 200`
+
  ```json
  {
     "apple_pass_url": "https://wallet-api-server.example.com/apple_pass_file_google_drive_file_id",
@@ -38,12 +48,32 @@
  }
 ```
 
-### GET /:apple_pass_file_google_drive_file_id
+#### RESPONSE WITH VALIDATION ERRORS
+Occurs when all required fields are not provided in the request payload.
+
+`status_code: 422`
+
+ ```json
+ {
+    "errors": { "event_name": "is required"}
+ }
+```
+
+### 2. GET `/:apple_pass_file_google_drive_file_id`
 
 * Doesn't require authentication.
 
 #### Response
-Serves `apple_pass_file_google_drive_file_id.pkpass` file
+Returns `apple_pass_file_google_drive_file_id.pkpass` file
+
+
+## Considerations
+* Currently all created apple `.pkpass` files are uploaded to the google drive. Which was chosen for the simplicity of implementation
+  and for the fact that we already have access to the google drive due to google service account.
+* Uploaded `.pkpass` files are being proxied/served by the wallet api server.
+* Uploaded `.pkpass` files have format of `#{uuid}.pkpass`, which avoids leaking of attendee name to users that might have access to the google drive folder.
+* We might want to consider, uploading the files to s3 to offload serving of files
+  and probably for having the ability to prune files that haven't been accessed for a while.
 
 
 ## ENV Variables

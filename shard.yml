@@ -12,6 +12,11 @@ dependencies:
   secrets-env:
     github: place-labs/secrets-env
 
+  # https://github.com/jeromegn/kilt
+  # Generic template interface for Crystal
+  kilt:
+    github: jeromegn/kilt
+
   # Pass implementors
   # TODO: Get rid of branch for google once merged into master
   google:
