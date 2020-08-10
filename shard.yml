@@ -12,20 +12,20 @@ dependencies:
   secrets-env:
     github: place-labs/secrets-env
 
-  # https://github.com/jeromegn/kilt
-  # Generic template interface for Crystal
-  kilt:
-    github: jeromegn/kilt
-
   # Pass implementors
+  # TODO: Get rid of branch for google once merged into master
   google:
     github: PlaceOS/google
+    branch: google_passes
   passkit:
     github: red-ant/passkit
 
 development_dependencies:
   ameba:
     github: veelenga/ameba
+  webmock:
+    github: manastech/webmock.cr
+    branch: master
 
 # compile target
 targets:

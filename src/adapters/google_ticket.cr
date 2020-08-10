@@ -22,6 +22,7 @@ class GoogleTicket
       date_time: @ticket.date_time,
       venue: venue,
       logo_image: logo_image,
+      event_image: event_image,
       event_details: @ticket.event_details
     )
   end
@@ -50,7 +51,13 @@ class GoogleTicket
     {uri: @ticket.logo.not_nil!["image_uri"], description: @ticket.logo.not_nil!["description"]}
   end
 
+  private def event_image
+    return if @ticket.icon.nil?
+
+    {uri: @ticket.icon.not_nil!["image_uri"]?, description: nil}
+  end
+
   private def default_logo_image
-    {uri: ENV["LOGO_IMAGE_URL"], description: ENV["LOGO_DESCRIPTION"]}
+    {uri: ENV["LOGO_IMAGE_URL"]?, description: ENV["LOGO_DESCRIPTION"]?}
   end
 end

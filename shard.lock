@@ -44,21 +44,21 @@ shards:
     git: https://github.com/crystal-community/jwt.git
     version: 1.4.2
 
-  kilt:
-    git: https://github.com/jeromegn/kilt.git
-    version: 0.6.0
-
   openssl_ext:
     git: https://github.com/stakach/openssl_ext.git
     version: 1.2.2
 
   passkit:
-    path: ../passkit
+    git: https://github.com/red-ant/passkit.git
     version: 0.1.0
 
   secrets-env:
     git: https://github.com/place-labs/secrets-env.git
     version: 1.0.0
+
+  webmock:
+    git: https://github.com/manastech/webmock.cr.git
+    version: 0.13.0+git.commit.bb3eab30f6c7d1fdc0a7ff14cd136d68e860d1a7
 
   yaml_mapping:
     git: https://github.com/crystal-lang/yaml_mapping.cr.git
