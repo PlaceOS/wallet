@@ -11,9 +11,9 @@
 ## Available EndPoints
 * Requires authentication header `x-api-key` which must match `API_KEY` ENV VAR
 
-### 1. POST `/`
+#### 1. POST `/`
 
-#### BODY
+##### BODY
  ```json
  {
     "event_name": "My event",
@@ -30,7 +30,7 @@
  }
 ```
 
-##### Required fields:
+###### Required fields:
 * `event_name`
 * `ticket_holder_name`
 * `location`
@@ -38,7 +38,7 @@
 * `qr_code`
 
 
-#### SUCCESS RESPONSE
+##### SUCCESS RESPONSE
 `status_code: 200`
 
  ```json
@@ -48,7 +48,7 @@
  }
 ```
 
-#### RESPONSE WITH VALIDATION ERRORS
+##### RESPONSE WITH VALIDATION ERRORS
 Occurs when all required fields are not provided in the request payload.
 
 `status_code: 422`
@@ -59,11 +59,11 @@ Occurs when all required fields are not provided in the request payload.
  }
 ```
 
-### 2. GET `/:apple_pass_file_google_drive_file_id`
+#### 2. GET `/:apple_pass_file_google_drive_file_id`
 
 * Doesn't require authentication.
 
-#### Response
+##### Response
 Returns `apple_pass_file_google_drive_file_id.pkpass` file
 
 
