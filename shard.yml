@@ -18,10 +18,8 @@ dependencies:
     github: jeromegn/kilt
 
   # Pass implementors
-  # TODO: Get rid of branch for google once merged into master
   google:
     github: PlaceOS/google
-    branch: google_passes
   passkit:
     github: red-ant/passkit
 

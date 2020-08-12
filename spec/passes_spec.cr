@@ -21,4 +21,20 @@ describe Passes do
       result.body.includes?("errors").should be_truthy
     end
   end
+
+  it "works! when providing proper api header and proper payload" do
+    ApiHelper.mock_create
+
+    response = IO::Memory.new
+    headers = HTTP::Headers{
+      "x-api-key" => "SECURE_KEY",
+    }
+
+    passes = Passes.new(context("POST", "/", headers, ApiHelper.event_payload, response_io: response))
+    passes.create
+    body = response.to_s.split("\r\n").reject(&.empty?)[-1]
+
+    body.includes?("http://127.0.0.1:3000/123").should be_truthy
+    body.includes?("https://pay.google.com/gp/v/save").should be_truthy
+  end
 end
