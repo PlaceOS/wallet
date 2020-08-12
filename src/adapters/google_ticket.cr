@@ -8,7 +8,6 @@ class GoogleTicket
     @auth = Auth.new(scopes: "https://www.googleapis.com/auth/wallet_object.issuer").call
   end
 
-  # TODO: icon image from params
   def convert
     Google::EventTickets.new(auth: @auth,
       serial_number: @serial_number,
@@ -58,6 +57,6 @@ class GoogleTicket
   end
 
   private def default_logo_image
-    {uri: ENV["LOGO_IMAGE_URL"]?, description: ENV["LOGO_DESCRIPTION"]?}
+    {uri: ENV["GOOGLE_LOGO_IMAGE_URL"]?, description: ENV["GOOGLE_LOGO_DESCRIPTION"]?}
   end
 end

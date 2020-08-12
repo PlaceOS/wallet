@@ -49,7 +49,6 @@ class Passkit
     add_logo_image(pk_pass)
   end
 
-  # TODO: Need to verify date time format
   private def relevant_date
     @ticket.date_time.not_nil!["start"]
   end
