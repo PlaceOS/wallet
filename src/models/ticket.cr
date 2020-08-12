@@ -26,35 +26,44 @@ class Ticket < ActiveModel::Model
   def generate
     serial_number = UUID.random.to_s
 
-    google_channel = Channel(String).new
-    apple_channel = Channel(String).new
+    google_channel = Channel(PassResponse).new
+    apple_channel = Channel(PassResponse).new
 
     spawn do
-      pass_url = begin
-        to_google(serial_number: serial_number).execute
-      rescue
-        "Failed to generate google pass url"
+      pass_response = begin
+        pass_url = to_google(serial_number: serial_number).execute
+
+        PassResponse.new(success: true, data: pass_url)
+      rescue ex
+        PassResponse.new(success: false, data: "Failed to generate google pass url. Error: #{ex.message}")
       end
-      google_channel.send(pass_url)
+      google_channel.send(pass_response)
     end
 
     spawn do
-      pass_url = begin
+      pass_response = begin
         pass_content = to_passkit(serial_number: serial_number).to_s
         pass_file = drive.create(name: "#{serial_number}.pkpass",
           content_bytes: pass_content,
           content_type: "application/vnd.apple.pkpass")
-        "#{base_url}/#{pass_file.id.to_s}"
-      rescue
-        "Failed to generate apple pass url"
+
+        PassResponse.new(success: true, data: "#{base_url}/#{pass_file.id.to_s}")
+      rescue ex
+        PassResponse.new(success: false, data: "Failed to generate apple pass url. Error: #{ex.message}")
       end
-      apple_channel.send(pass_url)
+      apple_channel.send(pass_response)
     end
 
-    {
-      apple_pass_url:  apple_channel.receive,
-      google_pass_url: google_channel.receive,
-    }
+    google_pass = google_channel.receive
+    apple_pass = apple_channel.receive
+
+    return google_pass unless google_pass.success
+    return apple_pass unless apple_pass.success
+
+    PassResponse.new(success: true, data: "", api_data: {
+      apple_pass_url:  apple_pass.data,
+      google_pass_url: google_pass.data,
+    })
   end
 
   def to_passkit(serial_number : String)
@@ -67,15 +76,24 @@ class Ticket < ActiveModel::Model
       serial_number: serial_number).convert
   end
 
-  private def drive
-    GoogleDrive.build
-  end
-
   def base_url
     if App.running_in_production?
       "https://#{App::DEFAULT_HOST}"
     else
       "http://#{App::DEFAULT_HOST}:#{App::DEFAULT_PORT}"
     end
+  end
+
+  struct PassResponse
+    property success : Bool
+    property data : String
+    property api_data : NamedTuple(apple_pass_url: String, google_pass_url: String)?
+
+    def initialize(@success, @data, @api_data = nil)
+    end
+  end
+
+  private def drive
+    GoogleDrive.build
   end
 end
