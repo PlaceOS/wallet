@@ -30,20 +30,29 @@ class Ticket < ActiveModel::Model
     apple_channel = Channel(String).new
 
     spawn do
-      pass_url = to_google(serial_number: serial_number).execute
+      pass_url = begin
+        to_google(serial_number: serial_number).execute
+      rescue
+        "Failed to generate google pass url"
+      end
       google_channel.send(pass_url)
     end
 
     spawn do
-      pass_content = to_passkit(serial_number: serial_number).to_s
-      pass_file = drive.create(name: "#{serial_number}.pkpass",
-        content_bytes: pass_content,
-        content_type: "application/vnd.apple.pkpass")
-      apple_channel.send(pass_file.id.to_s)
+      pass_url = begin
+        pass_content = to_passkit(serial_number: serial_number).to_s
+        pass_file = drive.create(name: "#{serial_number}.pkpass",
+          content_bytes: pass_content,
+          content_type: "application/vnd.apple.pkpass")
+        "#{base_url}/#{pass_file.id.to_s}"
+      rescue
+        "Failed to generate apple pass url"
+      end
+      apple_channel.send(pass_url)
     end
 
     {
-      apple_pass_url:  "#{base_url}/#{apple_channel.receive}",
+      apple_pass_url:  apple_channel.receive,
       google_pass_url: google_channel.receive,
     }
   end
