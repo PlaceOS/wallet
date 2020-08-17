@@ -48,8 +48,8 @@
  }
 ```
 
-##### RESPONSE WITH VALIDATION ERRORS
-Occurs when all required fields are not provided in the request payload.
+##### RESPONSE WITH ERRORS
+Occurs when all required fields are not provided in the request payload or Pass generation fails for either google or apple.
 
 `status_code: 422`
 
