@@ -1,4 +1,5 @@
 require "uuid"
+require "active-model"
 require "google"
 
 require "../adapters/google_ticket"
@@ -47,7 +48,7 @@ class Ticket < ActiveModel::Model
           content_bytes: pass_content,
           content_type: "application/vnd.apple.pkpass")
 
-        PassResponse.new(success: true, data: "#{base_url}/#{pass_file.id.to_s}")
+        PassResponse.new(success: true, data: "#{base_url}/#{pass_file.id}")
       rescue ex
         PassResponse.new(success: false, data: "Failed to generate apple pass url. Error: #{ex.message}")
       end
