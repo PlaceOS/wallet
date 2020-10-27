@@ -25,14 +25,15 @@ describe Passes do
   it "works! when providing proper api header and proper payload" do
     ApiHelper.mock_create
 
-    response = IO::Memory.new
     headers = HTTP::Headers{
       "x-api-key" => "SECURE_KEY",
     }
 
-    passes = Passes.new(context("POST", "/", headers, ApiHelper.event_payload, response_io: response))
-    passes.create
-    body = response.to_s.split("\r\n").reject(&.empty?)[-1]
+    ctx = context("POST", "/", headers, ApiHelper.event_payload)
+    ctx.response.output = IO::Memory.new
+    Passes.new(ctx).create
+
+    body = ctx.response.output.to_s
 
     body.includes?("http://127.0.0.1:3000/123").should be_truthy
     body.includes?("https://pay.google.com/gp/v/save").should be_truthy
