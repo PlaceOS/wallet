@@ -20,6 +20,7 @@ dependencies:
   # Pass implementors
   google:
     github: PlaceOS/google
+    version: ~> 2
   passkit:
     github: red-ant/passkit
 
