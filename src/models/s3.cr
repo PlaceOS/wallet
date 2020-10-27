@@ -59,6 +59,13 @@ class S3
   end
 end
 
-# s3 = PlaceOS::Utils::S3.new(ENV["AWS_REGION"], ENV["AWS_KEY"], ENV["AWS_SECRET"])
-# s3.read_file(object)
-# s3.write_file(path)
+module S3Client
+  extend self
+
+  def new
+    PlaceOS::Utils::S3.new(ENV["AWS_REGION"], ENV["AWS_KEY"], ENV["AWS_SECRET"])
+  end
+
+  # s3.read_file(object)
+  # s3.write_file(path)
+end

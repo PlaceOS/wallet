@@ -44,9 +44,11 @@ class Ticket < ActiveModel::Model
     spawn do
       pass_response = begin
         pass_content = to_passkit(serial_number: serial_number).to_s
-        pass_file = drive.create(name: "#{serial_number}.pkpass",
+
+        pass_file = GoogleDrive.build.create(name: "#{serial_number}.pkpass",
           content_bytes: pass_content,
-          content_type: "application/vnd.apple.pkpass")
+          content_type: "application/vnd.apple.pkpass") # GG Drive
+        # pass_file = S3Client.write_file(pass_content) # S3
 
         PassResponse.new(success: true, data: "#{base_url}/#{pass_file.id}")
       rescue ex
@@ -92,9 +94,5 @@ class Ticket < ActiveModel::Model
 
     def initialize(@success, @data, @api_data = nil)
     end
-  end
-
-  private def drive
-    GoogleDrive.build
   end
 end
