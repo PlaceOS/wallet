@@ -12,17 +12,15 @@ dependencies:
   secrets-env:
     github: place-labs/secrets-env
 
-  # https://github.com/jeromegn/kilt
-  # Generic template interface for Crystal
-  kilt:
-    github: jeromegn/kilt
-
   # Pass implementors
   google:
     github: PlaceOS/google
-    version: ~> 2
   passkit:
     github: red-ant/passkit
+
+  # AWS Drive
+  awscr-s3:
+    github: taylorfinnell/awscr-s3
 
 development_dependencies:
   ameba:
