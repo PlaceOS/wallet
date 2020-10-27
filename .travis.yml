@@ -4,4 +4,4 @@ install:
 script:
   - crystal tool format --check
   - bin/ameba
-  - source .example.env && crystal spec --error-trace
+  - (set -a && source .example.env && crystal spec --error-trace)
