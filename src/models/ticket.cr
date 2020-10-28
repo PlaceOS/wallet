@@ -45,10 +45,10 @@ class Ticket < ActiveModel::Model
       pass_response = begin
         pass_content = to_passkit(serial_number: serial_number).to_s
 
-        pass_file = GoogleDrive.build.create(name: "#{serial_number}.pkpass",
-          content_bytes: pass_content,
-          content_type: "application/vnd.apple.pkpass") # GG Drive
-        # pass_file = S3Client.write_file(pass_content) # S3
+        # pass_file = GoogleDrive.build.create(name: "#{serial_number}.pkpass",
+        #   content_bytes: pass_content,
+        #   content_type: "application/vnd.apple.pkpass")                                            # GG Drive
+        pass_file = S3.uploader.upload(ENV["AWS_BUCKET"], "#{serial_number}.pkpass", pass_content) # S3
 
         PassResponse.new(success: true, data: "#{base_url}/#{pass_file.id}")
       rescue ex

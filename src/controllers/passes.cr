@@ -24,7 +24,7 @@ class Passes < Application
 
   def show
     response.content_type = "application/vnd.apple.pkpass"
-    response.print(GoogleDrive.build.download_file(params["id"])) # GG Drive
-    # response.print(s3.read_file(params["id"])) # S3
+    # response.print(GoogleDrive.build.download_file(params["id"])) # GG Drive
+    response.print(S3.client.get_object(ENV["AWS_BUCKET"], params["id"])) # S3
   end
 end
