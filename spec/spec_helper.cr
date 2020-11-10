@@ -34,6 +34,8 @@ module ApiHelper
     WebMock.stub(:get, "https://example.com/icon.png")
     WebMock.stub(:post, "https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart")
       .to_return(body: file_response.to_json)
+    WebMock.stub(:put, "https://s3.amazonaws.com/bucket/2e17721c-8822-4035-ab76-678aa24239ca.pkpass?")
+      .to_return(body: file_response.to_json)
   end
 
   def event_payload
