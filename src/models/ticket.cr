@@ -4,7 +4,7 @@ require "google"
 
 require "../adapters/google_ticket"
 require "../adapters/passkit"
-require "./google_drive"
+require "../adapters/s3"
 
 class Ticket < ActiveModel::Model
   include ActiveModel::Validation
@@ -44,11 +44,8 @@ class Ticket < ActiveModel::Model
     spawn do
       pass_response = begin
         pass_content = to_passkit(serial_number: serial_number).to_s
-        pass_file = drive.create(name: "#{serial_number}.pkpass",
-          content_bytes: pass_content,
-          content_type: "application/vnd.apple.pkpass")
-
-        PassResponse.new(success: true, data: "#{base_url}/#{pass_file.id}")
+        S3.uploader.upload(ENV["AWS_BUCKET"], "#{serial_number}.pkpass", IO::Memory.new(pass_content))
+        PassResponse.new(success: true, data: "#{base_url}/#{serial_number}.pkpass")
       rescue ex
         PassResponse.new(success: false, data: "Failed to generate apple pass url. Error: #{ex.message}")
       end
@@ -92,9 +89,5 @@ class Ticket < ActiveModel::Model
 
     def initialize(@success, @data, @api_data = nil)
     end
-  end
-
-  private def drive
-    GoogleDrive.build
   end
 end

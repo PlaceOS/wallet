@@ -1,4 +1,4 @@
-require "../models/google_drive"
+require "../adapters/s3.cr"
 
 class Passes < Application
   before_action :require_authentication, only: :create
@@ -24,10 +24,6 @@ class Passes < Application
 
   def show
     response.content_type = "application/vnd.apple.pkpass"
-    response.print(drive.download_file(params["id"]))
-  end
-
-  private def drive
-    GoogleDrive.build
+    response.print(S3.client.get_object(ENV["AWS_BUCKET"], params["id"]))
   end
 end
