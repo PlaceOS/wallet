@@ -2,7 +2,7 @@ require "../models/auth"
 require "google"
 
 class GoogleTicket
-  property auth : Google::FileAuth
+  property auth : Google::Auth
 
   def initialize(@ticket : Ticket, @serial_number : String)
     @auth = Auth.new(scopes: "https://www.googleapis.com/auth/wallet_object.issuer").call
