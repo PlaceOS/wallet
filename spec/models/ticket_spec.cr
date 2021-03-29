@@ -2,7 +2,7 @@ require "../spec_helper"
 require "../../src/models/ticket"
 
 describe Ticket do
-  it "#generate works!", focus: true do
+  it "#generate works!" do
     ApiHelper.mock_create
 
     ticket = Ticket.from_json(ApiHelper.event_payload)
