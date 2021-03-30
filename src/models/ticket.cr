@@ -65,7 +65,7 @@ class Ticket < ActiveModel::Model
   end
 
   def to_passkit(serial_number : String)
-    Passkit.new(ticket: self,
+    PasskitPass.new(ticket: self,
       serial_number: serial_number).convert
   end
 

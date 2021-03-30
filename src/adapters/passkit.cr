@@ -1,6 +1,6 @@
 require "passkit"
 
-class Passkit
+class PasskitPass
   def initialize(@ticket : Ticket, @serial_number : String)
   end
 
