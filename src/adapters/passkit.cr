@@ -6,16 +6,16 @@ class Passkit
 
   def convert
     pass = PassKit::Pass.new(
-      pass_type_identifier: ENV["APPLE_PASS_TYPE_IDENTIFIER"],
-      team_identifier: ENV["APPLE_TEAM_IDENTIFIER"],
+      pass_type_identifier: App::APPLE_PASS_TYPE_IDENTIFIER,
+      team_identifier: App::APPLE_TEAM_IDENTIFIER,
       serial_number: @serial_number,
-      organization_name: ENV["APPLE_ORGANIZATION_NAME"],
+      organization_name: App::APPLE_ORGANIZATION_NAME,
       description: @ticket.event_name.to_s,
       logo_text: logo_text,
       type: PassKit::PassType::EventTicket,
-      foreground_color: ENV["APPLE_DESIGN_FOREGROUND_COLOR"],
-      background_color: ENV["APPLE_DESIGN_BACKGROUND_COLOR"],
-      label_color: ENV["APPLE_DESIGN_LABEL_COLOR"],
+      foreground_color: App::APPLE_DESIGN_FOREGROUND_COLOR,
+      background_color: App::APPLE_DESIGN_BACKGROUND_COLOR,
+      label_color: App::APPLE_DESIGN_LABEL_COLOR,
       header_fields: header_fields,
       primary_fields: [{
         key:   "eventLocation",
@@ -60,7 +60,7 @@ class Passkit
   end
 
   private def logo_text
-    return ENV["APPLE_LOGO_DESCRIPTION"] if @ticket.logo.nil?
+    return App::APPLE_LOGO_DESCRIPTION if @ticket.logo.nil?
 
     @ticket.logo.not_nil!["description"]
   end
@@ -88,7 +88,7 @@ class Passkit
 
   private def add_logo_image(pk_pass)
     if @ticket.logo.nil?
-      pk_pass.add_file("logo.png", File.read(ENV["APPLE_LOGO_PATH"]))
+      pk_pass.add_file("logo.png", File.read(App::APPLE_LOGO_PATH))
     else
       pk_pass.add_url(@ticket.logo.not_nil!["image_uri"].to_s)
     end
@@ -97,7 +97,7 @@ class Passkit
 
   private def add_icon_image(pk_pass)
     if @ticket.icon.nil?
-      pk_pass.add_file("icon.png", File.read(ENV["APPLE_ICON_PATH"]))
+      pk_pass.add_file("icon.png", File.read(App::APPLE_ICON_PATH))
     else
       pk_pass.add_url(@ticket.icon.not_nil!["image_uri"].to_s)
     end

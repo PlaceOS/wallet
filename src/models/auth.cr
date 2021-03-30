@@ -2,8 +2,8 @@ class Auth
   @signing_key : String
 
   def initialize(@scopes : String)
-    @signing_key = read_base64_key(ENV["GOOGLE_PRIVATE_KEY"])
-    @issuer = ENV["GOOGLE_CLIENT_EMAIL"]
+    @signing_key = read_base64_key(App::GOOGLE_PRIVATE_KEY)
+    @issuer = App::GOOGLE_CLIENT_EMAIL
   end
 
   def call

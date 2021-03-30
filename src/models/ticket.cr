@@ -44,7 +44,7 @@ class Ticket < ActiveModel::Model
     spawn do
       pass_response = begin
         pass_content = to_passkit(serial_number: serial_number).to_s
-        S3.uploader.upload(ENV["AWS_BUCKET"], "#{serial_number}.pkpass", IO::Memory.new(pass_content))
+        S3.uploader.upload(App::AWS_BUCKET, "#{serial_number}.pkpass", IO::Memory.new(pass_content))
         PassResponse.new(success: true, data: "#{base_url}/#{serial_number}.pkpass")
       rescue ex
         PassResponse.new(success: false, data: "Failed to generate apple pass url. Error: #{ex.message}")

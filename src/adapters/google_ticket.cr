@@ -11,8 +11,8 @@ class GoogleTicket
   def convert
     Google::EventTickets.new(auth: @auth,
       serial_number: @serial_number,
-      issuer_id: ENV["GOOGLE_WALLET_ISSUER_ID"],
-      issuer_name: ENV["GOOGLE_WALLET_ISSUER_NAME"],
+      issuer_id: App::GOOGLE_WALLET_ISSUER_ID,
+      issuer_name: App::GOOGLE_WALLET_ISSUER_NAME,
       event_name: @ticket.event_name.to_s,
       ticket_holder_name: @ticket.ticket_holder_name.to_s,
       qr_code_value: qr_code_value,
@@ -57,6 +57,6 @@ class GoogleTicket
   end
 
   private def default_logo_image
-    {uri: ENV["GOOGLE_LOGO_IMAGE_URL"]?, description: ENV["GOOGLE_LOGO_DESCRIPTION"]?}
+    {uri: App::GOOGLE_LOGO_IMAGE_URL, description: App::GOOGLE_LOGO_DESCRIPTION}
   end
 end
