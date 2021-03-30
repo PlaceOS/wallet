@@ -15,7 +15,7 @@ dependencies:
   # Pass implementors
   google:
     github: PlaceOS/google
-    branch: feat/base64
+    branch: master
   passkit:
     github: place-labs/passkit
     branch: feat/base64
