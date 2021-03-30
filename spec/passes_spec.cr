@@ -35,7 +35,7 @@ describe Passes do
 
     body = ctx.response.output.to_s
 
-    body.includes?("http://127.0.0.1:3000/123").should be_truthy
+    body.includes?("http://127.0.0.1:3000/").should be_truthy
     body.includes?("https://pay.google.com/gp/v/save").should be_truthy
   end
 end
