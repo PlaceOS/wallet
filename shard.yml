@@ -1,5 +1,6 @@
 name: wallet_api
 version: 1.1.0
+crystal: ">= 0.36.0"
 
 dependencies:
   action-controller:
