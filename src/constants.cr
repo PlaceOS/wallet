@@ -48,7 +48,5 @@ module App
   AWS_SECRET = ENV["AWS_SECRET"]
   AWS_BUCKET = ENV["AWS_BUCKET"]
 
-  def self.running_in_production?
-    ENVIRONMENT == "production"
-  end
+  class_getter? production = ENVIRONMENT.downcase == "production"
 end
