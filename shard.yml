@@ -19,7 +19,7 @@ dependencies:
     branch: master
   passkit:
     github: place-labs/passkit
-    branch: feat/base64
+    branch: master
 
   # AWS Drive
   awscr-s3:

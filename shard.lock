@@ -62,7 +62,7 @@ shards:
 
   passkit:
     git: https://github.com/place-labs/passkit.git
-    version: 0.2.0+git.commit.f75fd7d6c3301f7171856eee78cf74af1dd9a045
+    version: 0.2.0+git.commit.9bbfa6d1f3439d285602ce8bb85bafab209fa1e2
 
   secrets-env:
     git: https://github.com/place-labs/secrets-env.git
