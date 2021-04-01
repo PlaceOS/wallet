@@ -24,29 +24,33 @@ module App
 
   # # Environment Variables
   # Google
-  GOOGLE_PRIVATE_KEY        = ENV["GOOGLE_PRIVATE_KEY"]
-  GOOGLE_CLIENT_EMAIL       = ENV["GOOGLE_CLIENT_EMAIL"]
-  GOOGLE_WALLET_ISSUER_ID   = ENV["GOOGLE_WALLET_ISSUER_ID"]
-  GOOGLE_WALLET_ISSUER_NAME = ENV["GOOGLE_WALLET_ISSUER_NAME"]
+  GOOGLE_PRIVATE_KEY        = self.required_environment("GOOGLE_PRIVATE_KEY")
+  GOOGLE_CLIENT_EMAIL       = self.required_environment("GOOGLE_CLIENT_EMAIL")
+  GOOGLE_WALLET_ISSUER_ID   = self.required_environment("GOOGLE_WALLET_ISSUER_ID")
+  GOOGLE_WALLET_ISSUER_NAME = self.required_environment("GOOGLE_WALLET_ISSUER_NAME")
   GOOGLE_LOGO_IMAGE_URL     = ENV["GOOGLE_LOGO_IMAGE_URL"]?
   GOOGLE_LOGO_DESCRIPTION   = ENV["GOOGLE_LOGO_DESCRIPTION"]?
 
   # Apple
-  APPLE_PASS_TYPE_IDENTIFIER    = ENV["APPLE_PASS_TYPE_IDENTIFIER"]
-  APPLE_TEAM_IDENTIFIER         = ENV["APPLE_TEAM_IDENTIFIER"]
-  APPLE_ORGANIZATION_NAME       = ENV["APPLE_ORGANIZATION_NAME"]
-  APPLE_DESIGN_FOREGROUND_COLOR = ENV["APPLE_DESIGN_FOREGROUND_COLOR"]
-  APPLE_DESIGN_BACKGROUND_COLOR = ENV["APPLE_DESIGN_BACKGROUND_COLOR"]
-  APPLE_DESIGN_LABEL_COLOR      = ENV["APPLE_DESIGN_LABEL_COLOR"]
-  APPLE_LOGO_PATH               = ENV["APPLE_LOGO_PATH"]
-  APPLE_ICON_PATH               = ENV["APPLE_ICON_PATH"]
-  APPLE_LOGO_DESCRIPTION        = ENV["APPLE_LOGO_DESCRIPTION"]
+  APPLE_PASS_TYPE_IDENTIFIER    = self.required_environment("APPLE_PASS_TYPE_IDENTIFIER")
+  APPLE_TEAM_IDENTIFIER         = self.required_environment("APPLE_TEAM_IDENTIFIER")
+  APPLE_ORGANIZATION_NAME       = self.required_environment("APPLE_ORGANIZATION_NAME")
+  APPLE_DESIGN_FOREGROUND_COLOR = self.required_environment("APPLE_DESIGN_FOREGROUND_COLOR")
+  APPLE_DESIGN_BACKGROUND_COLOR = self.required_environment("APPLE_DESIGN_BACKGROUND_COLOR")
+  APPLE_DESIGN_LABEL_COLOR      = self.required_environment("APPLE_DESIGN_LABEL_COLOR")
+  APPLE_LOGO_PATH               = self.required_environment("APPLE_LOGO_PATH")
+  APPLE_ICON_PATH               = self.required_environment("APPLE_ICON_PATH")
+  APPLE_LOGO_DESCRIPTION        = self.required_environment("APPLE_LOGO_DESCRIPTION")
 
   # AWS
-  AWS_REGION = ENV["AWS_REGION"]
-  AWS_KEY    = ENV["AWS_KEY"]
-  AWS_SECRET = ENV["AWS_SECRET"]
-  AWS_BUCKET = ENV["AWS_BUCKET"]
+  AWS_REGION = self.required_environment("AWS_REGION")
+  AWS_KEY    = self.required_environment("AWS_KEY")
+  AWS_SECRET = self.required_environment("AWS_SECRET")
+  AWS_BUCKET = self.required_environment("AWS_BUCKET")
 
-  class_getter? production = ENVIRONMENT.downcase == "production"
+  class_getter? production : Bool = ENVIRONMENT.downcase == "production"
+
+  def self.required_environment(key)
+    ENV[key]?.presence || abort("missing required environment variable #{key}")
+  end
 end
