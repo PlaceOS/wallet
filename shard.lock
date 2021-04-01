@@ -2,7 +2,7 @@ version: 2.0
 shards:
   action-controller:
     git: https://github.com/spider-gazelle/action-controller.git
-    version: 3.5.2
+    version: 4.3.2
 
   active-model:
     git: https://github.com/spider-gazelle/active-model.git
@@ -63,6 +63,10 @@ shards:
   passkit:
     git: https://github.com/place-labs/passkit.git
     version: 0.2.0+git.commit.9bbfa6d1f3439d285602ce8bb85bafab209fa1e2
+
+  placeos-log-backend:
+    git: https://github.com/place-labs/log-backend.git
+    version: 0.3.0
 
   secrets-env:
     git: https://github.com/place-labs/secrets-env.git

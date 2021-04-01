@@ -1,6 +1,7 @@
 # Application dependencies
 require "action-controller"
 require "active-model"
+require "placeos-log-backend"
 require "./constants"
 
 # Application code
@@ -13,6 +14,8 @@ require "action-controller/server"
 
 # Configure logging (backend defined in constants.cr)
 log_level = App.production? ? Log::Severity::Info : Log::Severity::Debug
+
+Log.setup "*", :warn, PlaceOS::LogBackend.log_backend
 ::Log.setup("*", log_level, App::LOG_BACKEND)
 Log.builder.bind "action-controller.*", log_level, App::LOG_BACKEND
 Log.builder.bind "#{App::NAME}.*", log_level, App::LOG_BACKEND
