@@ -24,6 +24,6 @@ class Passes < Application
 
   def show
     response.content_type = "application/vnd.apple.pkpass"
-    response.print(S3.client.get_object(ENV["AWS_BUCKET"], params["id"]))
+    response.print(S3.client.get_object(App::AWS_BUCKET, params["id"]))
   end
 end

@@ -4,7 +4,7 @@ module S3
   extend self
 
   def client
-    Awscr::S3::Client.new(ENV["AWS_REGION"], ENV["AWS_KEY"], ENV["AWS_SECRET"])
+    Awscr::S3::Client.new(App::AWS_REGION, App::AWS_KEY, App::AWS_SECRET)
   end
 
   def uploader

@@ -2,47 +2,47 @@ version: 2.0
 shards:
   action-controller:
     git: https://github.com/spider-gazelle/action-controller.git
-    version: 3.4.0
+    version: 4.3.2
 
   active-model:
     git: https://github.com/spider-gazelle/active-model.git
-    version: 2.0.2
+    version: 3.0.0
 
   ameba:
     git: https://github.com/veelenga/ameba.git
-    version: 0.13.2
+    version: 0.14.2
 
   awscr-s3:
     git: https://github.com/taylorfinnell/awscr-s3.git
-    version: 0.8.0
+    version: 0.8.1
 
   awscr-signer:
     git: https://github.com/taylorfinnell/awscr-signer.git
-    version: 0.7.0
+    version: 0.8.1
 
   bindata:
     git: https://github.com/spider-gazelle/bindata.git
-    version: 1.7.0
+    version: 1.8.3
 
   connect-proxy:
     git: https://github.com/spider-gazelle/connect-proxy.git
-    version: 1.0.0
+    version: 1.2.1
 
   future:
     git: https://github.com/crystal-community/future.cr.git
     version: 0.1.0
 
   google:
-    git: https://github.com/PlaceOS/google.git
-    version: 2.6.5
+    git: https://github.com/placeos/google.git
+    version: 3.0.1+git.commit.e29d887f87b292c4ec7fb3537ee555cfd8996a56
 
   habitat:
     git: https://github.com/luckyframework/habitat.git
-    version: 0.4.4
+    version: 0.4.7
 
   http-params-serializable:
-    git: https://github.com/vladfaust/http-params-serializable.git
-    version: 0.4.0
+    git: https://github.com/caspiano/http-params-serializable.git
+    version: 0.4.1+git.commit.c87119117af3d2db11af22ad799ccf77072e6a8b
 
   json_mapping:
     git: https://github.com/crystal-lang/json_mapping.cr.git
@@ -50,27 +50,31 @@ shards:
 
   jwt:
     git: https://github.com/crystal-community/jwt.git
-    version: 1.4.2
+    version: 1.5.1
 
   lucky_router:
     git: https://github.com/luckyframework/lucky_router.git
-    version: 0.3.1
+    version: 0.4.1
 
   openssl_ext:
-    git: https://github.com/stakach/openssl_ext.git
-    version: 1.2.2
+    git: https://github.com/spider-gazelle/openssl_ext.git
+    version: 2.1.4
 
   passkit:
-    git: https://github.com/red-ant/passkit.git
-    version: 0.1.0
+    git: https://github.com/place-labs/passkit.git
+    version: 0.2.0+git.commit.9bbfa6d1f3439d285602ce8bb85bafab209fa1e2
+
+  placeos-log-backend:
+    git: https://github.com/place-labs/log-backend.git
+    version: 0.3.0
 
   secrets-env:
     git: https://github.com/place-labs/secrets-env.git
-    version: 1.1.0
+    version: 1.3.1
 
   webmock:
     git: https://github.com/manastech/webmock.cr.git
-    version: 0.13.0+git.commit.bb3eab30f6c7d1fdc0a7ff14cd136d68e860d1a7
+    version: 0.14.0+git.commit.42b347cdd64e13193e46167a03593944ae2b3d20
 
   yaml_mapping:
     git: https://github.com/crystal-lang/yaml_mapping.cr.git

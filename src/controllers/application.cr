@@ -39,6 +39,6 @@ abstract class Application < ActionController::Base
 
     return true if key.nil?
 
-    key != ENV["API_KEY"]?
+    key != App::API_KEY
   end
 end

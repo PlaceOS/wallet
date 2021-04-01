@@ -99,9 +99,12 @@ API_KEY=SECURE_KEY
 
 # APPLE PASS
 # Data needed to create/sign pass
-SIGNING_CERT=cert.pem
-PRIVATE_KEY=pkey.pem
-WWDR_CERT=wwdr.pem
+
+# Base64-encoded PEM Keys
+SIGNING_CERT=<...>
+PRIVATE_KEY=<...>
+WWDR_CERT=<...>
+
 PRIVATE_KEY_PASSWORD=12345
 APPLE_TEAM_IDENTIFIER=8EZ6J123456
 APPLE_PASS_TYPE_IDENTIFIER=pass.technology.place.dev
@@ -120,7 +123,11 @@ APPLE_DESIGN_LABEL_COLOR='rgb(255, 255, 255)'
 # GOOGLE PASS
 GOOGLE_WALLET_ISSUER_ID=12345678890
 GOOGLE_WALLET_ISSUER_NAME=PlaceOS
-GOOGLE_AUTH_FILE=direct-builder-1234567890.json
+
+# Base64-encoded PEM Key
+GOOGLE_PRIVATE_KEY=<...>
+GOOGLE_CLIENT_EMAIL=admin@company.com
+
 # Default data for pass, can be customized per request as well
 GOOGLE_LOGO_IMAGE_URL='https://example.com/logo.png'
 GOOGLE_LOGO_DESCRIPTION='PlaceOS Wallet'
