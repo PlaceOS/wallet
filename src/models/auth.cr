@@ -1,5 +1,6 @@
 class Auth
   @signing_key : String
+  @issuer : String
 
   def initialize(@scopes : String)
     @signing_key = read_base64_key(App::GOOGLE_PRIVATE_KEY)
