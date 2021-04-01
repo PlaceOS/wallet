@@ -75,7 +75,7 @@ class Ticket < ActiveModel::Model
   end
 
   def base_url
-    if App.running_in_production?
+    if App.production?
       "https://#{App::DEFAULT_HOST}"
     else
       "http://#{App::DEFAULT_HOST}:#{App::DEFAULT_PORT}"
