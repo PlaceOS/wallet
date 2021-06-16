@@ -1,4 +1,4 @@
-name: wallet_api
+name: wallet
 version: 1.1.0
 crystal: ">= 0.36.0"
 
